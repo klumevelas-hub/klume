@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>K Lume · vela aromática artesanal</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--bg:#fff;--ink:#141414;--mut:#6a6a6a;--line:#e3e3e3;--soft:#f5f3f1;--inv:0;--logo:url(assets/logo.png);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#121212;--ink:#f1f1f1;--mut:#a3a3a3;--line:#2c2c2c;--soft:#1b1a19;--inv:1}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#121212;--ink:#f1f1f1;--mut:#a3a3a3;--line:#2c2c2c;--soft:#1b1a19;--inv:1}
+html{scroll-padding-top:calc(90px + env(safe-area-inset-top,0px));scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:300 16px/1.6 Jost,system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+.serif,h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400}
+a{color:inherit}
+.bar{background:var(--ink);color:var(--bg);overflow:hidden;white-space:nowrap;font-size:13px;letter-spacing:.06em;padding:9px 0}
+.bar div{display:inline-block;animation:mq 38s linear infinite}
+.bar span{margin:0 34px}
+@keyframes mq{to{transform:translateX(-50%)}}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.in{max-width:1180px;margin:auto;padding:0 20px}
+.hd{display:flex;align-items:center;gap:28px;flex-wrap:wrap;padding:10px 0}
+.lg{width:78px;aspect-ratio:700/535;background:var(--logo) center/contain no-repeat;filter:invert(var(--inv));flex:none;display:block}
+nav{display:flex;gap:26px;flex:1}
+nav a{text-decoration:none;font-size:15px;white-space:nowrap}
+nav a:hover{text-decoration:underline;text-underline-offset:6px}
+.sr{display:flex;align-items:center;border:1px solid var(--line);padding:0 12px;width:260px;color:var(--mut)}
+.sr input{border:0;background:none;color:var(--ink);font:inherit;padding:11px 8px;width:100%;outline:none}
+.sr:focus-within{border-color:var(--ink)}
+@media(max-width:820px){.hd{gap:6px 14px}nav{order:3;flex:0 0 100%;overflow-x:auto;gap:22px;padding-bottom:6px}.sr{width:auto;flex:1}}
+.hero{position:relative;overflow:hidden;background:var(--soft)}
+.trk{display:flex;transition:transform .7s ease}
+.sl{flex:0 0 100%;min-height:min(72vh,520px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 24px;position:relative}
+.sl::before,.ac::before,.pv::before,.bp::before{content:"";position:absolute;inset:0;background:var(--logo) 0 0/120px repeat;opacity:.055;filter:invert(var(--inv));pointer-events:none}
+.sl>*{position:relative}
+.sl small,.bp small{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--mut)}
+.sl h1{font-size:clamp(40px,7vw,78px);font-weight:300;line-height:1.05;margin:10px 0 24px}
+.big{width:min(300px,64vw);aspect-ratio:700/535;background:var(--logo) center/contain no-repeat;filter:invert(var(--inv));margin-bottom:4px}
+.cta{display:inline-block;padding:13px 34px;border:1px solid var(--ink);color:var(--ink);text-decoration:none;letter-spacing:.22em;text-transform:uppercase;font-size:12px;font-weight:400;background:none;cursor:pointer;font-family:inherit}
+.cta:hover,.cta:focus-visible{background:var(--ink);color:var(--bg)}
+.ar{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:var(--ink);color:var(--bg);font-size:20px;cursor:pointer;z-index:2;line-height:1}
+.ar.l{left:18px}.ar.r{right:18px}
+.dots{position:absolute;bottom:16px;left:0;right:0;display:flex;justify-content:center;gap:8px;z-index:2}
+.dots button{width:8px;height:8px;padding:0;border-radius:99px;border:0;background:var(--mut);opacity:.5;cursor:pointer;transition:width .3s}
+.dots button[aria-current=true]{width:34px;opacity:1;background:var(--ink)}
+section{max-width:1180px;margin:auto;padding:60px 20px 20px}
+h2{font-size:clamp(30px,5vw,44px);font-style:italic;margin:0 0 24px}
+.ag{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.ac{all:unset;box-sizing:border-box;position:relative;overflow:hidden;cursor:pointer;text-align:center;border:1px solid var(--line);padding:70px 16px 28px;transition:border-color .2s}
+.ac>*{position:relative}
+.ac:hover,.ac:focus-visible,.ac[aria-pressed=true]{border-color:var(--ink)}
+.ac:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.ac b{display:block;font:400 26px "Cormorant Garamond",Georgia,serif;letter-spacing:.16em;text-transform:uppercase}
+.ac .sb{color:var(--mut);font-size:14px}
+.bg{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,250px);gap:16px}
+.bp{position:relative;overflow:hidden;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;background:var(--soft);border:1px solid var(--line)}
+.bp>*{position:relative}
+.bp h3{font-size:clamp(26px,3.4vw,40px);margin:2px 0 0;line-height:1.1}
+.bp.dk{background:var(--ink);color:var(--bg);grid:auto;grid-column:1/3;grid-row:1/3;border-color:var(--ink)}
+.bp.dk::before{filter:invert(calc(1 - var(--inv)))}
+.bp.dk small{color:var(--bg);opacity:.7}
+.bp.w{grid-column:3/5}
+@media(max-width:820px){.bg{grid-template-columns:1fr;grid-template-rows:none;grid-auto-rows:200px}.bp.dk,.bp.w{grid-column:auto;grid-row:auto}.bp.dk{min-height:260px}}
+.cw{position:relative}
+.pr{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
+.pr::-webkit-scrollbar{display:none}
+.pc{flex:0 0 calc((100% - 54px)/4);scroll-snap-align:start;min-width:210px}
+.pv{all:unset;box-sizing:border-box;display:block;width:100%;position:relative;overflow:hidden;aspect-ratio:4/5;border:1px solid var(--line);cursor:pointer;text-align:center}
+.pv>*{position:relative}
+.pv h3{font-size:28px;letter-spacing:.15em;text-transform:uppercase;line-height:1.2;margin:0;padding:0 14px}
+.pv .mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.pv small{font:400 17px "Cormorant Garamond",Georgia,serif;color:var(--mut)}
+.pv:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.pc p{margin:12px 2px 10px;font-size:15px}
+.bt{display:block;width:100%;padding:13px;border:0;background:var(--ink);color:var(--bg);font:400 13px Jost,sans-serif;letter-spacing:.12em;cursor:pointer;text-align:center;text-decoration:none}
+.bt:hover{opacity:.88}
+.cw .ar{display:flex;align-items:center;justify-content:center;top:38%;background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+.cw .ar.l{left:-14px}.cw .ar.r{right:-14px}
+@media(max-width:700px){.pc{flex-basis:76%}.cw .ar{display:none!important}}
+.fl{min-height:26px;color:var(--mut);margin:-10px 0 14px;font-size:14px}
+.fl button{background:none;border:0;color:var(--ink);text-decoration:underline;cursor:pointer;font:inherit}
+.st{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px;text-align:center;padding-bottom:20px}
+.st b{display:block;font:300 46px/1 "Cormorant Garamond",Georgia,serif}
+.st p{margin:8px 0 0;color:var(--mut)}
+footer{margin-top:60px;border-top:1px solid var(--line);text-align:center;padding:36px 20px 90px;color:var(--mut);font-size:13px;letter-spacing:.08em}
+.wf{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:25;background:var(--ink);color:var(--bg);padding:13px 22px;border-radius:99px;text-decoration:none;font-size:13px;letter-spacing:.14em;text-transform:uppercase;box-shadow:0 4px 18px rgba(0,0,0,.25)}
+dialog{border:1px solid var(--ink);background:var(--bg);color:var(--ink);padding:32px 26px;width:min(420px,92vw);text-align:center}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+dialog h3{font-size:30px;letter-spacing:.14em;text-transform:uppercase;margin:0}
+label{display:block;margin:22px 0 6px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--mut)}
+.qty{display:flex;justify-content:center;gap:6px}
+.qty button{width:40px;height:40px;border:1px solid var(--line);background:none;color:var(--ink);font-size:20px;cursor:pointer}
+.qty input{width:80px;height:40px;text-align:center;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:18px}
+.cd{font:400 34px "Cormorant Garamond",Georgia,serif;letter-spacing:.12em}
+.res{display:none;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.res p{margin:0;color:var(--mut);font-size:14px}
+.lk{margin-top:10px;background:none;border:0;color:var(--mut);cursor:pointer;font:inherit;font-size:13px}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.ph{background:var(--soft) var(--img,none) center/cover no-repeat}
+.ph[data-has]::before,.ph[data-has] .mid{display:none}
+.pa{display:block;position:relative;aspect-ratio:1/1;margin-bottom:16px;overflow:hidden}
+.pa::before{content:"";position:absolute;inset:0;background:var(--logo) 0 0/90px repeat;opacity:.05;filter:invert(var(--inv))}
+.pa .mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ac{padding:0 0 26px}
+.ic{display:flex;gap:2px}
+.ic button{position:relative;width:44px;height:44px;border:0;background:none;color:var(--ink);cursor:pointer;display:grid;place-items:center}
+.bd{position:absolute;top:3px;right:0;min-width:18px;height:18px;border-radius:99px;background:var(--ink);color:var(--bg);font-size:11px;display:none;place-items:center;padding:0 5px}
+.fi{width:100%;height:44px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;padding:0 12px}
+.nt{color:var(--mut);font-size:13px;margin:14px 0 0;min-height:20px}
+dialog#cart{margin:0 0 0 auto;inset-block:0;height:100dvh;max-height:none;width:min(400px,100vw);padding:20px 22px calc(20px + env(safe-area-inset-bottom,0px));text-align:left;flex-direction:column;border-width:0 0 0 1px}
+dialog#cart:not([open]){display:none}
+dialog#cart[open]{display:flex}
+.ch{display:flex;justify-content:space-between;align-items:center}
+#ci{flex:1;overflow:auto;margin:14px 0}
+.ci{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.ci .qty{align-items:center}.ci .qty button{width:32px;height:32px;font-size:16px}.ci .qty span{min-width:28px;text-align:center}
+.rm{background:none;border:0;color:var(--mut);font-size:22px;cursor:pointer}
+.em{color:var(--mut);text-align:center;margin-top:40px}
+.bt:disabled{opacity:.4;cursor:not-allowed}
+.ic button.on::after{content:"";position:absolute;top:9px;right:9px;width:8px;height:8px;border-radius:50%;background:#3f9b6a}
+.pd{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="bar" aria-label="Avisos"><div id="mq"></div></div>
+<header class="top"><div class="in hd">
+<a class="lg" href="#" role="img" aria-label="K Lume · início"></a>
+<nav><a href="#aromas">Aromas</a><a href="#catalogo">Fragrâncias</a><a href="#destaques">Personalize</a><a href="#como">Como funciona</a></nav>
+<label class="sr"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="s" type="search" placeholder="Buscar sua fragrância…" aria-label="Buscar fragrância"></label>
+<div class="ic"><button id="lgn" aria-label="Entrar"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></button><button id="crt" aria-label="Abrir carrinho"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="bd" id="cn">0</span></button></div>
+</div></header>
+
+<div class="hero" aria-roledescription="carrossel">
+<div class="trk" id="trk">
+<div class="sl"><div class="big" role="img" aria-label="K Lume"></div><h1>vela aromática artesanal</h1><a class="cta" href="#catalogo">Ver fragrâncias</a></div>
+<div class="sl"><small>Personalize</small><h1>A sua vela, com o seu rótulo</h1><a class="cta" href="#como">Como funciona</a></div>
+<div class="sl"><small>Feita com tempo</small><h1>Cura de 7 a 10 dias em cada vela</h1><a class="cta" href="#catalogo">Pedir orçamento</a></div>
+</div>
+<button class="ar l" id="pv" aria-label="Slide anterior">‹</button><button class="ar r" id="nx" aria-label="Próximo slide">›</button>
+<div class="dots" id="dots"></div>
+</div>
+
+<section id="aromas"><h2>Explore por aroma</h2><div class="ag" id="ag"></div></section>
+
+<section id="destaques"><div class="bg">
+<div class="bp dk"><small>Personalize</small><h3>Rótulo com a sua cara</h3><p style="margin:8px 0 0;opacity:.8">Escolha a vela e envie a sua personalização pelo WhatsApp.</p></div>
+<div class="bp w"><small>Cuidados</small><h3>Para a sua vela durar mais</h3></div>
+<div class="bp"><small>Sob encomenda</small><h3>Feita para você</h3></div>
+<div class="bp"><small>Lembranças</small><h3>Para presentear</h3></div>
+</div></section>
+
+<section id="catalogo"><h2>Nossas fragrâncias</h2><div class="fl" id="fl" role="status"></div>
+<div class="cw"><button class="ar l" id="cl" aria-label="Anterior">‹</button><div class="pr" id="pr"></div><button class="ar r" id="cr" aria-label="Próximo">›</button></div></section>
+
+<section id="como"><h2>Como funciona</h2><div class="st">
+<div><b>1</b><p>Escolha a fragrância e a quantidade</p></div>
+<div><b>2</b><p>Receba o código do seu pedido</p></div>
+<div><b>3</b><p>Envie a personalização pelo WhatsApp</p></div></div></section>
+
+<footer>K LUME · vela aromática artesanal<br>© 2026</footer>
+<a class="wf" id="wf" target="_blank" rel="noopener">WhatsApp</a>
+
+<dialog id="dlg">
+<h3 id="dN"></h3><p class="serif" style="margin:2px 0 0;color:var(--mut);font-size:18px">vela aromática artesanal</p>
+<label for="q">Quantidade</label>
+<div class="qty"><button id="mn" aria-label="Diminuir">−</button><input id="q" type="number" min="1" value="1" inputmode="numeric"><button id="pl" aria-label="Aumentar">+</button></div>
+<button class="bt" id="add" style="margin-top:22px">ADICIONAR AO CARRINHO</button>
+<button class="lk" id="x">Fechar</button>
+</dialog>
+
+<dialog id="cart" aria-label="Carrinho">
+<div class="ch"><h3>Carrinho</h3><button class="lk" id="cx" aria-label="Fechar carrinho" style="font-size:26px;margin:0">×</button></div>
+<div id="ci"></div>
+<div><p style="margin:0 0 12px"><span id="tt"></span> no pedido</p>
+<button class="bt" id="gc">GERAR CÓDIGO DO PEDIDO</button>
+<p class="nt" id="cm" role="status"></p>
+<div class="res" id="res" role="status"><p>Código do seu pedido</p><div class="cd" id="cd"></div>
+<a class="bt" id="wa" target="_blank" rel="noopener" style="margin-top:16px">ENVIAR PERSONALIZAÇÃO NO WHATSAPP</a></div></div>
+</dialog>
+
+<dialog id="login" aria-label="Minha conta">
+<div id="vAuth">
+<h3 id="aT">Entrar</h3><p class="serif" style="margin:2px 0 0;color:var(--mut);font-size:18px">acesse a sua conta</p>
+<div id="fN" hidden><label for="ln">Nome</label><input class="fi" id="ln" autocomplete="given-name"><label for="ls">Sobrenome</label><input class="fi" id="ls" autocomplete="family-name"><label for="lt">Telefone (WhatsApp)</label><input class="fi" id="lt" type="tel" autocomplete="tel"></div>
+<label for="le">E-mail</label><input class="fi" id="le" type="email" autocomplete="email">
+<label for="lp">Senha</label><input class="fi" id="lp" type="password" autocomplete="current-password">
+<button class="bt" id="lgo" style="margin-top:22px">ENTRAR</button>
+<p class="nt" id="lm" role="status"></p>
+<button class="lk" id="tg">Ainda não tem conta? Criar conta</button><br><button class="lk" id="fg">Esqueci a senha</button>
+</div>
+<div id="vConta" hidden><h3>Minha conta</h3><p class="nt" id="cE"></p><div id="ped" style="text-align:left;margin:14px 0"></div><button class="bt" id="sair">SAIR</button></div>
+<button class="lk" id="lx">Fechar</button>
+</dialog>
+
+<script src="js/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
+<script>
+const CFG=window.KLUME_CONFIG||{};
+const WHATS=CFG.WHATSAPP||"5511900000000";
+let VELAS=[{n:"Lavanda Francesa",f:"floral"},{n:"Baunilha",f:"doce"},{n:"Capim Limão",f:"cítrica"},{n:"Maracujá",f:"frutal"},{n:"Limão Siciliano",f:"cítrica"}];
+const AR=[["cítrica","Cítricas","Frescor que desperta"],["floral","Florais","Calma em cada acender"],["doce","Doces","Aconchego que abraça"],["frutal","Frutais","Leveza tropical"]];
+const $=s=>document.querySelector(s),norm=t=>t.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+const AV=["Velas aromáticas artesanais feitas sob encomenda","Personalize com o seu rótulo","Cura de 7 a 10 dias em cada vela","Peça o seu orçamento pelo WhatsApp"].map(t=>`<span>✦ ${t}</span>`).join("");
+$("#mq").innerHTML=AV+AV+AV+AV;
+$("#wf").href="https://wa.me/"+WHATS+"?text="+encodeURIComponent("Olá! Gostaria de saber mais sobre as velas da K Lume.");
+const FOTOS={}; // fotos: FOTOS["Baunilha"]="data:image/jpeg;base64,..." e FOTOS["aroma:cítrica"]="..."
+const phu=u=>u?`data-has style="--img:url('${u}')"`:"";
+const ph=k=>FOTOS[k]?`data-has style="--img:url('${FOTOS[k]}')"`:"";
+const CAM='<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" style="color:var(--mut);margin-bottom:6px" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
+// carrossel
+let i=0,t;const N=3,dots=$("#dots");
+dots.innerHTML=Array.from({length:N},(_,k)=>`<button aria-label="Slide ${k+1}"></button>`).join("");
+function go(k){i=(k+N)%N;$("#trk").style.transform=`translateX(-${i*100}%)`;[...dots.children].forEach((b,j)=>b.setAttribute("aria-current",j===i))}
+dots.onclick=e=>{const b=e.target.closest("button");if(b)go([...dots.children].indexOf(b))};
+$("#pv").onclick=()=>go(i-1);$("#nx").onclick=()=>go(i+1);
+const play=()=>{clearInterval(t);if(!matchMedia("(prefers-reduced-motion:reduce)").matches)t=setInterval(()=>go(i+1),6500)};
+$(".hero").onmouseenter=()=>clearInterval(t);$(".hero").onmouseleave=play;go(0);play();
+// aromas + catálogo
+let fil="";
+$("#ag").innerHTML=AR.map(a=>`<button class="ac" data-f="${a[0]}" aria-pressed="false"><span class="pa ph" ${ph("aroma:"+a[0])}><span class="mid">${CAM}<small style="color:var(--mut);font-size:12px;letter-spacing:.12em">FOTO EM BREVE</small></span></span><b>${a[1]}</b><span class="sb">${a[2]}</span></button>`).join("");
+function draw(){
+ const q=norm($("#s").value.trim()),l=VELAS.filter(v=>(!fil||v.f===fil)&&norm(v.n).includes(q));
+ $("#pr").innerHTML=l.map(v=>`<div class="pc"><button class="pv ph" data-n="${v.n}" data-i="${v.id??""}" aria-label="Escolher ${v.n}" ${phu(v.foto)}><span class="mid">${CAM}<small style="font-size:12px;letter-spacing:.12em">FOTO EM BREVE</small></span></button><p>Vela ${v.n}</p><button class="bt" data-n="${v.n}" data-i="${v.id??""}">ADICIONAR AO CARRINHO</button></div>`).join("")||`<p style="color:var(--mut)">Nenhuma fragrância encontrada.</p>`;
+ const nm=(AR.find(a=>a[0]===fil)||[])[1];
+ $("#fl").innerHTML=nm?`Mostrando: ${nm} · <button id="clr">ver todas</button>`:"";
+ document.querySelectorAll(".ac").forEach(b=>b.setAttribute("aria-pressed",b.dataset.f===fil));
+ const c=$("#clr");if(c)c.onclick=()=>{fil="";draw()};
+}
+$("#ag").onclick=e=>{const b=e.target.closest(".ac");if(!b)return;fil=fil===b.dataset.f?"":b.dataset.f;draw();$("#catalogo").scrollIntoView()};
+$("#s").oninput=()=>draw();
+$("#s").onkeydown=e=>{if(e.key==="Enter")$("#catalogo").scrollIntoView()};
+const step=()=>$("#pr").clientWidth*.9;
+$("#cl").onclick=()=>$("#pr").scrollBy({left:-step(),behavior:"smooth"});
+$("#cr").onclick=()=>$("#pr").scrollBy({left:step(),behavior:"smooth"});
+draw();
+// carrinho
+let cart=[];try{cart=JSON.parse(localStorage.getItem("klume-cart")||"[]")}catch(e){}
+const saveC=()=>{try{localStorage.setItem("klume-cart",JSON.stringify(cart))}catch(e){}};
+const total=()=>cart.reduce((a,c)=>a+c.q,0);
+function drawCart(){
+ const n=total();$("#cn").textContent=n;$("#cn").style.display=n?"grid":"none";
+ $("#ci").innerHTML=cart.length?cart.map((c,k)=>`<div class="ci"><div><b style="font-weight:500">${c.n}</b><br><small style="color:var(--mut)">vela aromática artesanal</small></div><div class="qty"><button data-k="${k}" data-d="-1" aria-label="Diminuir">−</button><span>${c.q}</span><button data-k="${k}" data-d="1" aria-label="Aumentar">+</button></div><button class="rm" data-k="${k}" data-d="x" aria-label="Remover ${c.n}">×</button></div>`).join(""):`<p class="em">Seu carrinho está vazio.</p>`;
+ $("#tt").textContent=n+(n===1?" vela":" velas");$("#gc").disabled=!n;$("#res").style.display="none";
+}
+$("#ci").onclick=e=>{const b=e.target.closest("button");if(!b)return;const k=+b.dataset.k,d=b.dataset.d;
+ if(d==="x")cart.splice(k,1);else cart[k].q=Math.max(1,cart[k].q+Number(d));saveC();drawCart()};
+const bd=(d,e)=>{const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()};
+["#dlg","#cart","#login"].forEach(id=>$(id).addEventListener("click",e=>bd($(id),e)));
+$("#crt").onclick=()=>$("#cart").showModal();$("#cx").onclick=()=>$("#cart").close();
+// escolher quantidade
+let atual="",atualId="";
+$("#pr").onclick=e=>{const c=e.target.closest("[data-n]");if(!c)return;atual=c.dataset.n;atualId=c.dataset.i||"";$("#dN").textContent=atual;$("#q").value=1;$("#dlg").showModal()};
+const qv=()=>Math.max(1,parseInt($("#q").value)||1);
+$("#mn").onclick=()=>{$("#q").value=Math.max(1,qv()-1)};
+$("#pl").onclick=()=>{$("#q").value=qv()+1};
+$("#x").onclick=()=>$("#dlg").close();
+$("#add").onclick=()=>{const q=qv(),f=cart.find(c=>c.n===atual);if(f)f.q+=q;else cart.push({n:atual,q,id:atualId?Number(atualId):undefined});saveC();drawCart();$("#dlg").close();$("#cart").showModal()};
+$("#gc").onclick=async()=>{
+ if(!cart.length)return;
+ $("#cm").textContent="";
+ const itens=cart.map(c=>`- ${c.n}: ${c.q} un.`).join("\n"),tot=total();
+ let code;
+ if(sb){
+  if(!user){abrirAuth();msg("Entre ou crie a sua conta para gerar o código do pedido.");return}
+  const lista=cart.map(c=>({...c,id:c.id||(VELAS.find(v=>v.n===c.n)||{}).id}));
+  if(lista.some(c=>!c.id)){$("#cm").textContent="O catálogo ainda está carregando. Tente de novo em instantes.";return}
+  $("#gc").disabled=true;
+  try{
+   if(!cli){const r=await sb.from("clientes").select("id").eq("user_id",user.id).single();if(r.error)throw r.error;cli=r.data}
+   const p=await sb.from("pedidos").insert({cliente_id:cli.id}).select("id,codigo").single();if(p.error)throw p.error;
+   const it=await sb.from("pedido_itens").insert(lista.map(c=>({pedido_id:p.data.id,produto_id:c.id,quantidade:c.q})));if(it.error)throw it.error;
+   code=p.data.codigo;
+  }catch(e){console.error(e);$("#cm").textContent="Não foi possível registrar o pedido. Tente de novo em instantes.";$("#gc").disabled=false;return}
+ }else{
+  code="KL-"+String(new Date().getFullYear()).slice(2)+"-"+Array.from({length:4},()=>"ABCDEFGHJKLMNPQRSTUVWXYZ23456789"[Math.floor(Math.random()*32)]).join("");
+ }
+ const texto=`Olá! Quero solicitar um orçamento.\nCódigo do pedido: ${code}\n${itens}\nTotal: ${tot} velas\nGostaria de enviar a personalização.`;
+ cart=[];saveC();drawCart();
+ $("#cd").textContent=code;$("#wa").href="https://wa.me/"+WHATS+"?text="+encodeURIComponent(texto);$("#res").style.display="block";
+};
+drawCart();
+
+// ---- login e banco (Supabase) ----
+const sb=(CFG.SUPABASE_URL&&CFG.SUPABASE_KEY&&window.supabase)?window.supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_KEY):null;
+let user=null,cli=null,modo="entrar";
+const ST={orcamento:"Orçamento",confirmado:"Confirmado",producao:"Em produção",cura:"Em cura",pronto:"Pronto",entregue:"Entregue",cancelado:"Cancelado"};
+const traduz=m=>/Invalid login/i.test(m)?"E-mail ou senha incorretos.":/already registered/i.test(m)?"Este e-mail já tem cadastro.":/not confirmed/i.test(m)?"Confirme o seu e-mail antes de entrar.":"Não foi possível concluir. "+m;
+const msg=t=>{$("#lm").textContent=t};
+function setModo(m){modo=m;const c=m==="criar";$("#aT").textContent=c?"Criar conta":"Entrar";$("#fN").hidden=!c;$("#lgo").textContent=c?"CRIAR CONTA":"ENTRAR";$("#tg").textContent=c?"Já tem conta? Entrar":"Ainda não tem conta? Criar conta";$("#lp").autocomplete=c?"new-password":"current-password"}
+function abrirAuth(){setModo("entrar");msg(sb?"":"O site ainda não está conectado ao banco de dados.");$("#vAuth").hidden=false;$("#vConta").hidden=true;if(!$("#login").open)$("#login").showModal();$("#le").focus()}
+async function abrirConta(){
+ $("#vAuth").hidden=true;$("#vConta").hidden=false;$("#cE").textContent=user.email;$("#ped").innerHTML="";$("#login").showModal();
+ const r=await sb.from("pedidos").select("codigo,status,created_at").order("created_at",{ascending:false}).limit(10);
+ $("#ped").innerHTML=(r.data&&r.data.length)?"<b>Meus pedidos</b>"+r.data.map(p=>`<div class="pd"><span>${p.codigo}</span><span>${ST[p.status]||p.status} · ${new Date(p.created_at).toLocaleDateString("pt-BR")}</span></div>`).join(""):'<p class="nt">Você ainda não fez nenhum pedido.</p>';
+}
+$("#lgn").onclick=()=>user?abrirConta():abrirAuth();
+$("#tg").onclick=()=>{setModo(modo==="criar"?"entrar":"criar");msg("")};
+$("#lx").onclick=()=>$("#login").close();
+$("#lgo").onclick=async()=>{
+ if(!sb){msg("O site ainda não está conectado ao banco de dados.");return}
+ const email=$("#le").value.trim(),senha=$("#lp").value;
+ if(!email||!senha){msg("Informe e-mail e senha.");return}
+ $("#lgo").disabled=true;
+ try{
+  if(modo==="criar"){
+   const nome=$("#ln").value.trim(),sobrenome=$("#ls").value.trim(),telefone=$("#lt").value.trim();
+   if(!nome||!sobrenome||!telefone){msg("Informe nome, sobrenome e telefone.");return}
+   if(senha.length<6){msg("A senha precisa ter pelo menos 6 caracteres.");return}
+   const r=await sb.auth.signUp({email,password:senha,options:{data:{nome,sobrenome,telefone}}});
+   if(r.error){msg(traduz(r.error.message));return}
+   if(!r.data.session){msg("Conta criada! Confirme o seu e-mail para entrar.");return}
+  }else{
+   const r=await sb.auth.signInWithPassword({email,password:senha});
+   if(r.error){msg(traduz(r.error.message));return}
+  }
+  $("#login").close();
+ }finally{$("#lgo").disabled=false}
+};
+$("#fg").onclick=async()=>{
+ const email=$("#le").value.trim();
+ if(!sb||!email){msg(sb?"Digite o seu e-mail acima.":"O site ainda não está conectado ao banco de dados.");return}
+ const r=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
+ msg(r.error?"Não foi possível enviar o e-mail agora.":"Enviamos um link para o seu e-mail.");
+};
+$("#sair").onclick=async()=>{await sb.auth.signOut();$("#login").close()};
+function novaSenha(){const p=prompt("Digite a nova senha (mínimo 6 caracteres):");if(p&&p.length>=6)sb.auth.updateUser({password:p}).then(r=>alert(r.error?"Não foi possível alterar a senha.":"Senha alterada!"))}
+if(sb){
+ sb.auth.onAuthStateChange((ev,s)=>{user=s?s.user:null;cli=null;$("#lgn").classList.toggle("on",!!user);$("#lgn").setAttribute("aria-label",user?"Minha conta":"Entrar");if(ev==="PASSWORD_RECOVERY")setTimeout(novaSenha,300)});
+ sb.from("produtos").select("id,nome,familia,foto_url").order("ordem").then(r=>{if(!r.error&&r.data&&r.data.length){VELAS=r.data.map(p=>({id:p.id,n:p.nome,f:p.familia,foto:p.foto_url}));draw()}});
+}
+</script>
+</body>
+</html>
