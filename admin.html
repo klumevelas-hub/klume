@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>K Lume · Painel administrativo</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Young+Serif&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--bg:#f3f1f6;--card:#fff;--ink:#2a2233;--mut:#6f667a;--line:#ddd7e6;--pl:#5b3a73;--plt:#ece3f4;--fl:#e8a33d;--ok:#3f6e55;--bad:#b3392f;--badt:#f9e3e0;--okt:#e0efe6;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#1a1520;--card:#241d2c;--ink:#ece6f2;--mut:#a79db3;--line:#3a3046;--pl:#c9a6e6;--plt:#33263f;--fl:#f0b559;--ok:#7fc29c;--bad:#f08a80;--badt:#40211f;--okt:#1f3a2c}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#1a1520;--card:#241d2c;--ink:#ece6f2;--mut:#a79db3;--line:#3a3046;--pl:#c9a6e6;--plt:#33263f;--fl:#f0b559;--ok:#7fc29c;--bad:#f08a80;--badt:#40211f;--okt:#1f3a2c}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Instrument Sans",system-ui,sans-serif}
+h1,h2{font-family:"Young Serif",Georgia,serif;font-weight:400;margin:0}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 20px 8px;max-width:980px;margin:auto}
+h1{font-size:24px}
+header small{color:var(--mut)}
+nav{display:flex;gap:6px;padding:8px 20px;max-width:980px;margin:auto;overflow-x:auto}
+nav button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:9px 16px;border-radius:99px;font:inherit;cursor:pointer;white-space:nowrap}
+nav button[aria-selected=true]{background:var(--pl);border-color:var(--pl);color:var(--bg);font-weight:600}
+main{max-width:980px;margin:auto;padding:8px 20px 40px}
+section{display:none}section.on{display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+h2{font-size:19px;margin-bottom:12px}
+label{display:block;font-size:13px;color:var(--mut);margin-bottom:10px}
+input,select{width:100%;margin-top:3px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--pl);outline-offset:1px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sum div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)}
+.sum .big{font-family:"Young Serif",Georgia,serif;font-size:26px;color:var(--pl);border:0;padding-top:14px}
+.btn{background:var(--pl);color:var(--bg);border:0;padding:10px 16px;border-radius:8px;font:inherit;font-weight:600;cursor:pointer}
+.ghost{background:none;border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:3px 10px;cursor:pointer;font:inherit}
+.wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-weight:500;color:var(--mut);font-size:13px}
+th,td{padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tag{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600}
+.ok{background:var(--okt);color:var(--ok)}.bad{background:var(--badt);color:var(--bad)}.warn{background:var(--plt);color:var(--pl)}
+.empty{color:var(--mut);padding:16px 0}
+.hint{color:var(--mut);font-size:13px;margin:0 0 12px}
+dialog{border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);padding:20px;width:min(440px,92vw)}
+dialog::backdrop{background:rgba(20,10,30,.55)}
+textarea{width:100%;margin-top:3px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;resize:vertical}
+a{color:var(--pl)}
+.act{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+.err{color:var(--bad);font-size:13px;min-height:18px;margin:0}
+#gate{position:fixed;inset:0;background:var(--bg);display:grid;place-items:center;z-index:50;padding:20px}
+.gt{width:min(380px,100%)}
+.gt h1{margin-bottom:2px}
+</style>
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
+</head>
+<body>
+<div id="gate"><div class="card gt"><h1>K Lume</h1><p class="hint">Painel administrativo</p>
+<label>E-mail<input id="ge" type="email" autocomplete="email"></label>
+<label>Senha<input id="gp" type="password" autocomplete="current-password"></label>
+<button class="btn" id="gb" style="width:100%">Entrar</button><p class="err" id="gm" role="alert" style="margin-top:10px"></p></div></div>
+<header><div><h1>Ateliê de velas</h1><small>Painel administrativo</small></div><small id="hoje"></small> <button class="ghost" id="out">Sair</button></header>
+<nav role="tablist">
+<button role="tab" data-t="calc" aria-selected="true">Calculadora</button>
+<button role="tab" data-t="est" aria-selected="false">Estoque</button>
+<button role="tab" data-t="age" aria-selected="false">Agenda de produção</button>
+<button role="tab" data-t="cli" aria-selected="false">Clientes</button>
+</nav>
+<main>
+<section id="calc" class="on">
+<div class="grid">
+<div class="card sum"><h2>Calculadora de preparo</h2>
+<p class="hint">Informe até quantos ml o pote vai receber. A massa é ml × densidade, e a essência é uma parte dessa massa.</p>
+<div class="row"><label>Capacidade do pote (ml)<input id="ml" type="number" value="100"></label><label>Quantidade de velas<input id="qtd" type="number" value="10" min="1"></label></div>
+<div class="row"><label>Fator de densidade<input id="dens" type="number" value="0.88" step="0.01"></label><label>Essência (%)<input id="ess" type="number" value="10"></label></div>
+<div><span>Massa total por vela</span><b id="pTot"></b></div>
+<div><span>Essência por vela</span><b id="pEss"></b></div>
+<div><span>Cera real por vela</span><b id="pCera"></b></div>
+<div><span>Cera real no lote</span><b id="bCera"></b></div>
+<div><span>Essência no lote</span><b id="bEss"></b></div>
+<label style="margin-top:14px">Item de estoque da cera<select id="sCera"></select></label>
+<label>Item de estoque da essência<select id="sEss"></select></label>
+<label>Item de estoque do pote (1 por vela)<select id="sPote"></select></label>
+<label>Item de estoque do pavio (1 por vela)<select id="sPav"></select></label>
+<label>Item de estoque da embalagem (1 por vela)<select id="sEmb"></select></label>
+<button class="btn" id="prod">Produzir lote e dar baixa no estoque</button>
+<p class="hint" id="pMsg" style="margin-top:10px" role="status"></p>
+</div>
+<div class="card"><h2>Calculadora de custos</h2>
+<p class="hint">As quantidades de cera e essência vêm do preparo. Preencha só os preços.</p>
+<div class="row"><label>Cera (R$/kg)<input id="cK" type="number" value="38"></label><label>Essência (R$/kg)<input id="eK" type="number" value="320"></label></div>
+<div class="row"><label>Pavio (R$)<input id="pav" type="number" value="1.2" step="0.1"></label><label>Pote (R$)<input id="pot" type="number" value="7.5" step="0.1"></label></div>
+<div class="row"><label>Embalagem (R$)<input id="emb" type="number" value="3" step="0.1"></label><label>Outros (R$)<input id="out" type="number" value="1" step="0.1"></label></div>
+<label>Margem de lucro (%)<input id="mar" type="number" value="100"></label>
+<label>Finalidade do lote<select id="fin"><option value="venda">Para venda</option><option value="estoque">Para estoque</option></select></label>
+<div class="row" id="descBox"><label>Desconto (%)<input id="dPct" type="number" value="10" min="0" max="100"></label><label>Vale a partir de (unid.)<input id="dMin" type="number" value="20" min="1"></label></div>
+</div>
+<div class="card sum"><h2>Orçamento</h2>
+<div><span>Custo por vela</span><b id="rCusto"></b></div>
+<div><span>Preço por vela</span><b id="rPreco"></b></div>
+<div><span>Lucro por vela</span><b id="rLucro"></b></div>
+<div><span>Custo total</span><b id="rCT"></b></div>
+<div><span>Total a preço cheio</span><b id="rCheio"></b></div>
+<div id="rDescRow"><span id="rDescTxt">Desconto</span><b id="rDesc"></b></div>
+<div class="big"><span id="rTotLbl">Total ao cliente</span><span id="rTotal"></span></div>
+</div>
+</div>
+</section>
+
+<section id="est">
+<div class="card"><h2>Insumos e velas prontas</h2>
+<p class="hint">Itens abaixo do mínimo aparecem em alerta.</p>
+<div class="wrap"><table><thead><tr><th>Item</th><th>Quantidade</th><th>Preço</th><th>Mínimo</th><th>Situação</th><th></th></tr></thead><tbody id="eb"></tbody></table></div>
+<div class="row" style="margin-top:16px;grid-template-columns:repeat(auto-fit,minmax(130px,1fr))">
+<label>Nome do item<input id="nN" placeholder="Ex.: Essência de lavanda"></label>
+<label>Quantidade<input id="nQ" type="number" value="0" min="0"></label>
+<label>Unidade de medida<select id="nU"><option>g</option><option>kg</option><option>ml</option><option>l</option><option selected>un</option></select></label>
+<label>Preço (R$ por unidade)<input id="nP" type="number" value="0" min="0" step="0.01"></label>
+<label>Estoque mínimo<input id="nM" type="number" value="0" min="0"></label></div>
+<button class="btn" id="addE">Adicionar item</button></div>
+</section>
+
+<section id="age">
+<div class="card"><h2>Pedidos e produção</h2>
+<p class="hint">Os pedidos dos clientes chegam aqui. Defina a data de entrega e o painel calcula quando iniciar a produção (entrega − cura − folga).</p>
+<div class="wrap"><table><thead><tr><th>Iniciar em</th><th>Pedido</th><th>Itens</th><th>Entrega</th><th>Cura</th><th>Folga</th><th>Status</th><th></th></tr></thead><tbody id="ob"></tbody></table></div></div>
+<div class="card" style="margin-top:16px"><h2>Novo pedido manual</h2>
+<div class="row"><label>Cliente<select id="oN"></select></label><label>Fragrância<select id="oP"></select></label></div>
+<div class="row"><label>Quantidade<input id="oQ" type="number" value="10" min="1"></label><label>Data de entrega<input id="oD" type="date"></label></div>
+<button class="btn" id="addO">Criar pedido</button></div>
+</section>
+
+<section id="cli">
+<div class="card"><h2>Clientes</h2>
+<p class="hint">Cadastre quem faz pedidos e anote a forma de pagamento combinada.</p>
+<div class="wrap"><table><thead><tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Pagamento</th><th></th></tr></thead><tbody id="cb"></tbody></table></div>
+<button class="btn" id="addC" style="margin-top:14px">+ Novo cliente</button></div>
+</section>
+</main>
+<dialog id="dlg">
+<h2 id="dTit">Novo cliente</h2>
+<div class="row" style="margin-top:12px"><label>Nome<input id="cNome" autocomplete="given-name"></label><label>Sobrenome<input id="cSob" autocomplete="family-name"></label></div>
+<div class="row"><label>E-mail<input id="cEmail" type="email" autocomplete="email"></label><label>Telefone (WhatsApp)<input id="cTel" type="tel" placeholder="(11) 91234-5678" autocomplete="tel"></label></div>
+<label>Observações sobre a forma de pagamento<textarea id="cObs" rows="3" placeholder="Ex.: Pix à vista, 50% na encomenda e 50% na entrega"></textarea></label>
+<p class="err" id="cErr" role="alert"></p>
+<div class="act"><button class="ghost" id="cCan" style="padding:9px 16px">Cancelar</button><button class="btn" id="cSave">Salvar cliente</button></div>
+</dialog>
+<script>
+const $=s=>document.querySelector(s),R=n=>Number(n).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+const num=id=>parseFloat($("#"+id).value)||0;
+const esc=t=>String(t==null?"":t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmtD=s=>s?new Date(s+"T00:00:00").toLocaleDateString("pt-BR"):"—";
+const r3=x=>Math.round(x*1000)/1000;
+const fail=e=>{console.error(e);alert("Não foi possível concluir: "+(e.message||e))};
+$("#hoje").textContent="Hoje: "+new Date().toLocaleDateString("pt-BR");
+const CFG=window.KLUME_CONFIG||{};
+const sb=(CFG.SUPABASE_URL&&CFG.SUPABASE_KEY&&window.supabase)?window.supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_KEY):null;
+const D={ins:[],cli:[],ped:[],prod:[],cfg:null};
+const STS=["orcamento","confirmado","producao","cura","pronto","entregue","cancelado"];
+const STL={orcamento:"Orçamento",confirmado:"Confirmado",producao:"Em produção",cura:"Em cura",pronto:"Pronto",entregue:"Entregue",cancelado:"Cancelado"};
+const L={
+ ins:()=>sb.from("insumos").select("*").order("nome"),
+ cli:()=>sb.from("clientes").select("*").order("nome"),
+ prod:()=>sb.from("produtos").select("id,nome").order("ordem"),
+ ped:()=>sb.from("pedidos").select("id,codigo,status,data_entrega,cura_dias,folga_dias,inicio_producao,clientes(nome,sobrenome),pedido_itens(quantidade,produtos(nome))").order("created_at",{ascending:false}),
+ cfg:()=>sb.from("config").select("*").eq("id",1).single()
+};
+async function load(...ks){const rs=await Promise.all(ks.map(k=>L[k]()));ks.forEach((k,i)=>{if(rs[i].error)throw rs[i].error;D[k]=rs[i].data})}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
+ document.querySelectorAll("nav button").forEach(x=>x.setAttribute("aria-selected",x===b));
+ document.querySelectorAll("section").forEach(s=>s.classList.toggle("on",s.id===b.dataset.t));
+});
+function calc(){
+ const tot=num("ml")*num("dens"),essG=tot*num("ess")/100,ceraG=tot-essG,q=num("qtd");
+ const g=v=>v.toLocaleString("pt-BR",{maximumFractionDigits:1})+" g";
+ $("#pTot").textContent=g(tot);$("#pEss").textContent=g(essG);$("#pCera").textContent=g(ceraG);
+ $("#bCera").textContent=g(ceraG*q);$("#bEss").textContent=g(essG*q);
+ const custo=ceraG/1000*num("cK")+essG/1000*num("eK")+num("pav")+num("pot")+num("emb")+num("out");
+ const preco=custo*(1+num("mar")/100);
+ $("#rCusto").textContent=R(custo);$("#rPreco").textContent=R(preco);
+ const venda=$("#fin").value==="venda";
+ $("#descBox").style.display=venda?"":"none";
+ const aplica=venda&&q>=num("dMin")&&num("dPct")>0;
+ const fator=aplica?1-num("dPct")/100:1;
+ const cheio=preco*q,total=cheio*fator,lucroTot=total-custo*q;
+ $("#rPreco").textContent=R(preco);
+ $("#rLucro").textContent=R(preco*fator-custo);
+ $("#rCT").textContent=R(custo*q);
+ $("#rCheio").textContent=R(cheio);
+ $("#rDescRow").style.display=venda?"":"none";
+ $("#rDescTxt").textContent=aplica?"Desconto de "+num("dPct")+"% (a partir de "+num("dMin")+" unid.)":"Desconto (pedido abaixo de "+num("dMin")+" unid.)";
+ $("#rDesc").textContent=aplica?"− "+R(cheio-total):R(0);
+ $("#rTotal").textContent=venda?R(total):R(cheio);
+ $("#rTotLbl").textContent=venda?"Total ao cliente":"Valor do lote a preço de tabela";
+ $("#rPreco").previousElementSibling.textContent=aplica?"Preço por vela (cheio)":"Preço por vela";
+}
+document.querySelectorAll("#calc input").forEach(i=>i.oninput=calc);$("#fin").onchange=calc;calc();
+// ---- parâmetros ----
+function aplicarCfg(){if(!D.cfg)return;$("#dens").value=D.cfg.densidade;$("#ess").value=D.cfg.pct_essencia;$("#dPct").value=D.cfg.desc_pct;$("#dMin").value=D.cfg.desc_min;calc()}
+{const b=document.createElement("button"),t="Salvar parâmetros (densidade, essência e desconto)";b.className="btn";b.textContent=t;b.style.marginTop="16px";$("#calc").appendChild(b);
+ b.onclick=async()=>{const r=await sb.from("config").update({densidade:num("dens"),pct_essencia:num("ess"),desc_pct:num("dPct"),desc_min:num("dMin")}).eq("id",1);if(r.error)return fail(r.error);b.textContent="Parâmetros salvos ✓";setTimeout(()=>b.textContent=t,2200)}}
+// ---- estoque ----
+function drawStock(){
+ $("#eb").innerHTML=D.ins.length?D.ins.map(it=>{const low=Number(it.quantidade)<Number(it.minimo),u=esc(it.unidade);
+  return `<tr><td>${esc(it.nome)}</td><td>${r3(it.quantidade)} ${u}</td><td>${Number(it.preco)?R(it.preco)+" / "+u:"—"}</td><td>${r3(it.minimo)} ${u}</td><td><span class="tag ${low?"bad":"ok"}">${low?"Repor":"Em dia"}</span></td><td><button class="ghost" data-a="-" data-i="${it.id}" aria-label="Diminuir">−</button> <button class="ghost" data-a="+" data-i="${it.id}" aria-label="Aumentar">+</button> <button class="ghost" data-a="x" data-i="${it.id}">Remover</button></td></tr>`}).join(""):`<tr><td colspan="6" class="empty">Nenhum item cadastrado. Adicione o primeiro abaixo.</td></tr>`;
+ fillSel();
+}
+$("#eb").onclick=async e=>{const b=e.target.closest("button");if(!b)return;const id=+b.dataset.i,a=b.dataset.a,it=D.ins.find(x=>x.id===id);
+ const r=a==="x"?await sb.from("insumos").delete().eq("id",id):await sb.from("insumos").update({quantidade:Math.max(0,r3(Number(it.quantidade)+(a==="+"?1:-1)))}).eq("id",id);
+ if(r.error)return fail(r.error);await load("ins");drawStock()};
+$("#addE").onclick=async()=>{const n=$("#nN").value.trim();if(!n){$("#nN").focus();return}
+ const r=await sb.from("insumos").insert({nome:n,quantidade:num("nQ"),unidade:$("#nU").value,preco:num("nP"),minimo:num("nM")});
+ if(r.error)return fail(r.error);$("#nN").value="";await load("ins");drawStock()};
+// ---- produzir lote (baixa no estoque) ----
+const SEL=[["sCera","cera"],["sEss","ess"],["sPote","pote"],["sPav","pavio"],["sEmb","embalagem"]];
+function fillSel(){
+ SEL.forEach(([id,k])=>{const s=$("#"+id),first=s.options.length===0,prev=s.value,opt=id==="sPote"||id==="sPav"||id==="sEmb";
+  s.innerHTML=(opt?'<option value="">Não descontar</option>':"")+D.ins.map(it=>`<option value="${it.id}">${esc(it.nome)} (${r3(it.quantidade)} ${esc(it.unidade)})</option>`).join("");
+  if(!first&&s.querySelector(`option[value="${prev}"]`))s.value=prev;
+  else{const it=D.ins.find(x=>x.nome.toLowerCase().includes(k));if(it)s.value=it.id}});
+}
+const fator=u=>({kg:1000,g:1})[String(u).trim().toLowerCase()];
+$("#prod").onclick=async()=>{
+ const m=$("#pMsg"),q=num("qtd"),tot=num("ml")*num("dens"),essG=tot*num("ess")/100,ceraG=tot-essG;
+ const ic=D.ins.find(x=>x.id==$("#sCera").value),ie=D.ins.find(x=>x.id==$("#sEss").value);
+ if(!ic||!ie){m.textContent="Escolha no estoque o item da cera e o da essência.";return}
+ const fc=fator(ic.unidade),fe=fator(ie.unidade);
+ if(!fc||!fe){m.textContent="Cera e essência precisam estar em g ou kg no estoque. Ajuste a unidade do item.";return}
+ const uses=[{it:ic,amt:ceraG*q/fc,txt:(ceraG*q).toFixed(1)+" g de "+ic.nome},{it:ie,amt:essG*q/fe,txt:(essG*q).toFixed(1)+" g de "+ie.nome}];
+ for(const id of ["sPote","sPav","sEmb"]){const it=D.ins.find(x=>x.id==$("#"+id).value);if(it)uses.push({it,amt:q,txt:q+" "+it.unidade+" de "+it.nome})}
+ if(new Set(uses.map(x=>x.it.id)).size<uses.length){m.textContent="O mesmo item de estoque foi escolhido mais de uma vez.";return}
+ const falta=uses.filter(x=>x.amt>Number(x.it.quantidade)+1e-9);
+ if(falta.length){m.textContent="Estoque insuficiente em: "+falta.map(x=>x.it.nome).join(", ")+". Nada foi descontado.";return}
+ const rs=await Promise.all(uses.map(x=>sb.from("insumos").update({quantidade:r3(Number(x.it.quantidade)-x.amt)}).eq("id",x.it.id)));
+ const er=rs.find(r=>r.error);if(er)return fail(er.error);
+ await load("ins");drawStock();
+ m.textContent="Lote registrado ("+q+" velas). Baixa: "+uses.map(x=>x.txt).join("; ")+".";
+};
+// ---- clientes ----
+let editC=null;
+function openCli(id){editC=id||null;const c=D.cli.find(x=>x.id===id)||{};$("#dTit").textContent=id?"Editar cliente":"Novo cliente";
+ [["cNome","nome"],["cSob","sobrenome"],["cEmail","email"],["cTel","telefone"],["cObs","obs_pagamento"]].forEach(([i,k])=>$("#"+i).value=c[k]||"");
+ $("#cErr").textContent="";$("#dlg").showModal();$("#cNome").focus()}
+function drawCli(){
+ const sel=$("#oN"),prev=sel.value;
+ sel.innerHTML=D.cli.length?D.cli.map(c=>`<option value="${c.id}">${esc(c.nome+" "+c.sobrenome)}</option>`).join(""):'<option value="">Nenhum cliente cadastrado</option>';
+ if(prev&&sel.querySelector(`option[value="${prev}"]`))sel.value=prev;
+ $("#cb").innerHTML=D.cli.length?D.cli.map(c=>{let d=(c.telefone||"").replace(/\D/g,"");if(d&&d.length<=11)d="55"+d;
+  return `<tr><td><b>${esc(c.nome+" "+c.sobrenome)}</b>${c.user_id?' <span class="tag warn">com login</span>':""}</td><td>${esc(c.email||"—")}</td><td>${d?`<a href="https://wa.me/${d}" target="_blank" rel="noopener">${esc(c.telefone)}</a>`:"—"}</td><td style="white-space:normal;min-width:180px">${esc(c.obs_pagamento||"—")}</td><td><button class="ghost" data-e="${c.id}">Editar</button> <button class="ghost" data-x="${c.id}">Remover</button></td></tr>`}).join(""):'<tr><td colspan="5" class="empty">Nenhum cliente cadastrado. Clique em “Novo cliente”.</td></tr>';
+}
+$("#cb").onclick=async e=>{const b=e.target.closest("button");if(!b)return;
+ if(b.dataset.e)openCli(+b.dataset.e);
+ if(b.dataset.x&&confirm("Remover este cliente?")){const r=await sb.from("clientes").delete().eq("id",+b.dataset.x);if(r.error)return fail(r.error);await load("cli");drawCli()}};
+$("#addC").onclick=()=>openCli();
+$("#cCan").onclick=()=>$("#dlg").close();
+$("#cSave").onclick=async()=>{
+ const rec={nome:$("#cNome").value.trim(),sobrenome:$("#cSob").value.trim(),email:$("#cEmail").value.trim()||null,telefone:$("#cTel").value.trim(),obs_pagamento:$("#cObs").value.trim()||null};
+ if(!rec.nome||!rec.sobrenome){$("#cErr").textContent="Informe nome e sobrenome.";return}
+ if(rec.email&&!/^\S+@\S+\.\S+$/.test(rec.email)){$("#cErr").textContent="O e-mail parece incompleto.";return}
+ if(!rec.telefone){$("#cErr").textContent="Informe o telefone para contato pelo WhatsApp.";return}
+ const r=editC?await sb.from("clientes").update(rec).eq("id",editC):await sb.from("clientes").insert(rec);
+ if(r.error){$("#cErr").textContent="Não foi possível salvar: "+r.error.message;return}
+ await load("cli");drawCli();$("#dlg").close();
+};
+// ---- pedidos e agenda ----
+function drawProd(){$("#oP").innerHTML=D.prod.map(p=>`<option value="${p.id}">${esc(p.nome)}</option>`).join("")}
+function drawOrders(){
+ const hoje=new Date();hoje.setHours(0,0,0,0);
+ $("#ob").innerHTML=D.ped.length?[...D.ped].sort((a,b)=>(a.inicio_producao||"9999").localeCompare(b.inicio_producao||"9999")).map(o=>{
+  const atr=o.inicio_producao&&new Date(o.inicio_producao+"T00:00:00")<hoje&&["orcamento","confirmado"].includes(o.status);
+  const cl=o.clientes?o.clientes.nome+" "+o.clientes.sobrenome:"",its=(o.pedido_itens||[]).map(i=>`${i.quantidade}× ${i.produtos?i.produtos.nome:"?"}`).join(", ");
+  return `<tr data-id="${o.id}"><td><b>${fmtD(o.inicio_producao)}</b>${atr?' <span class="tag bad">Atrasado</span>':""}</td><td>${esc(o.codigo)}<br><small>${esc(cl)}</small></td><td style="white-space:normal;min-width:140px">${esc(its)}</td><td><input type="date" data-f="data_entrega" value="${o.data_entrega||""}" style="min-width:140px"></td><td><select data-f="cura_dias">${[7,8,9,10].map(n=>`<option${n===o.cura_dias?" selected":""}>${n}</option>`).join("")}</select></td><td><input type="number" min="0" data-f="folga_dias" value="${o.folga_dias}" style="width:68px"></td><td><select data-f="status">${STS.map(s=>`<option value="${s}"${s===o.status?" selected":""}>${STL[s]}</option>`).join("")}</select></td><td><button class="ghost" data-x="${o.id}">Remover</button></td></tr>`}).join(""):'<tr><td colspan="8" class="empty">Nenhum pedido ainda. Os pedidos dos clientes aparecem aqui.</td></tr>';
+}
+$("#ob").onchange=async e=>{const t=e.target,f=t.dataset.f;if(!f)return;const id=+t.closest("tr").dataset.id;let v=t.value;
+ if(f==="data_entrega")v=v||null;else if(f!=="status")v=Math.max(0,+v);
+ const r=await sb.from("pedidos").update({[f]:v}).eq("id",id);if(r.error)fail(r.error);await load("ped");drawOrders()};
+$("#ob").onclick=async e=>{const b=e.target.closest("button");if(!b||!confirm("Remover este pedido?"))return;
+ const r=await sb.from("pedidos").delete().eq("id",+b.dataset.x);if(r.error)return fail(r.error);await load("ped");drawOrders()};
+$("#addO").onclick=async()=>{
+ const cid=+$("#oN").value,pid=+$("#oP").value,q=Math.max(1,Math.floor(num("oQ")));
+ if(!cid){openCli();return}
+ const p=await sb.from("pedidos").insert({cliente_id:cid,data_entrega:$("#oD").value||null,status:"confirmado"}).select("id").single();
+ if(p.error)return fail(p.error);
+ const it=await sb.from("pedido_itens").insert({pedido_id:p.data.id,produto_id:pid,quantidade:q});
+ if(it.error)return fail(it.error);
+ await load("ped");drawOrders()};
+// ---- acesso ----
+const gm=t=>{$("#gm").textContent=t};
+async function entrar(user){
+ const r=await sb.from("profiles").select("role").eq("id",user.id).single();
+ if(r.error||!r.data||r.data.role!=="admin"){gm("Esta conta não tem acesso de administrador.");await sb.auth.signOut();return}
+ try{await load("ins","cli","prod","ped","cfg")}catch(e){gm("Não foi possível carregar os dados: "+e.message);return}
+ aplicarCfg();drawStock();drawCli();drawProd();drawOrders();$("#gate").style.display="none";
+}
+$("#gb").onclick=async()=>{
+ if(!sb){gm("O site ainda não está conectado ao banco de dados (config.js).");return}
+ const email=$("#ge").value.trim(),password=$("#gp").value;
+ if(!email||!password){gm("Informe e-mail e senha.");return}
+ $("#gb").disabled=true;gm("");
+ const r=await sb.auth.signInWithPassword({email,password});
+ $("#gb").disabled=false;
+ if(r.error){gm(/Invalid login/i.test(r.error.message)?"E-mail ou senha incorretos.":r.error.message);return}
+ await entrar(r.data.user);
+};
+$("#gp").onkeydown=e=>{if(e.key==="Enter")$("#gb").click()};
+$("#out").onclick=async()=>{if(sb)await sb.auth.signOut();location.reload()};
+if(sb)sb.auth.getSession().then(({data})=>{if(data.session)entrar(data.session.user)});
+</script>
+</body>
+</html>
