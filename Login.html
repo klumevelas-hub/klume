@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Entrar · K Lume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#0a0a0a; --panel:#111111; --text:#f2f2f2; --muted:#a8a8a8; --line:#3a3a3a; --line-strong:#f2f2f2;
+  --btn-bg:#f2f2f2; --btn-text:#111111; --error:#e8938a;
+  --serif:"Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --sans:"Jost", system-ui, -apple-system, "Segoe UI", sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;font-size:17px;line-height:1.5;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px}
+.logo{display:flex;flex-direction:column;align-items:center;margin-bottom:28px;text-decoration:none;color:var(--text)}
+.logo svg{width:44px;height:56px}
+.logo span{font-family:var(--serif);font-size:15px;letter-spacing:.7em;margin-right:-.7em;margin-top:6px}
+.box{width:100%;max-width:560px;background:var(--panel);border:1px solid var(--line-strong);padding:56px 48px 40px;text-align:center}
+h1{font-family:var(--serif);font-weight:400;font-size:48px;letter-spacing:.14em;margin:0 0 8px;text-transform:uppercase;line-height:1.1}
+.lead{font-family:var(--serif);font-size:22px;margin:0 0 40px}
+.field{margin-bottom:28px}
+label{display:block;font-size:14px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:12px;font-weight:400}
+.input{position:relative}
+input[type=email],input[type=password],input[type=text]{width:100%;height:56px;padding:0 16px;font:inherit;font-size:17px;color:var(--text);background:transparent;border:1px solid var(--line);border-radius:0}
+input:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--text);outline-offset:3px}
+input[aria-invalid=true]{border-color:var(--error)}
+.toggle{position:absolute;right:8px;top:8px;height:40px;padding:0 10px;border:0;background:none;color:var(--muted);font:inherit;font-size:13px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer}
+.err{color:var(--error);font-size:15px;margin:8px 0 0;text-align:left}
+.btn{width:100%;height:60px;margin-top:8px;border:0;border-radius:0;background:var(--btn-bg);color:var(--btn-text);font:inherit;font-weight:400;font-size:16px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer}
+.btn:hover{background:#ffffff}
+.btn[disabled]{opacity:.7;cursor:progress}
+.status{margin:18px 0 0;min-height:26px;font-size:16px}
+.status.fail{color:var(--error)}
+.links{margin-top:32px;display:flex;flex-direction:column;gap:20px;font-size:17px}
+.links a{color:var(--text);text-decoration:none}
+.links a:hover{text-decoration:underline;text-underline-offset:4px}
+.foot{margin-top:28px;font-family:var(--serif);font-size:14px;letter-spacing:.3em;color:var(--muted)}
+@media (max-width:520px){
+  .box{padding:40px 24px 32px}
+  h1{font-size:38px}
+}
+</style>
+</head>
+<body>
+  <a class="logo" href="#inicio" aria-label="K Lume, vela aromática artesanal">
+    <svg viewBox="0 0 44 56" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+      <path d="M22 2c-4 5-5 9-2 12 3-2 4-7 2-12z"/>
+      <path d="M12 20v32M12 36c9-4 16-9 18-16M18 33c6 3 11 9 14 19"/>
+    </svg>
+    <span>K LUME</span>
+  </a>
+
+  <main class="box">
+    <h1>Entrar</h1>
+    <p class="lead">acesse a sua conta</p>
+
+    <form id="form" novalidate>
+      <div class="field">
+        <label for="email">E-mail</label>
+        <input id="email" name="email" type="email" autocomplete="email" required aria-describedby="email-err">
+        <p class="err" id="email-err" role="alert"></p>
+      </div>
+      <div class="field">
+        <label for="senha">Senha</label>
+        <div class="input">
+          <input id="senha" name="senha" type="password" autocomplete="current-password" required aria-describedby="senha-err">
+          <button class="toggle" type="button" id="toggle" aria-controls="senha" aria-pressed="false">Mostrar</button>
+        </div>
+        <p class="err" id="senha-err" role="alert"></p>
+      </div>
+      <button class="btn" type="submit" id="submit">Entrar</button>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="links">
+      <a href="#cadastro">Ainda não tem conta? Criar conta</a>
+      <a href="#recuperar">Esqueci a senha</a>
+    </div>
+  </main>
+  <p class="foot">vela aromática artesanal</p>
+
+<script>
+(function(){
+  var form=document.getElementById('form'),email=document.getElementById('email'),senha=document.getElementById('senha');
+  var eErr=document.getElementById('email-err'),sErr=document.getElementById('senha-err');
+  var status=document.getElementById('status'),btn=document.getElementById('submit');
+
+  // Para onde cada tipo de conta vai depois do login.
+  var DESTINOS={admin:'/admin',cliente:'/minha-conta'};
+
+  // DEMONSTRAÇÃO: no sistema real, troque por uma chamada ao seu back-end
+  // (ex.: fetch('/api/login')). Quem decide se a conta é admin ou cliente
+  // deve ser o SERVIDOR, que devolve { ok:true, papel:'admin' | 'cliente' }.
+  function autenticar(email,senha){
+    return new Promise(function(resolve){
+      setTimeout(function(){
+        var papel=email.toLowerCase()==='admin@klumevelas.com.br'?'admin':'cliente';
+        resolve({ok:true,papel:papel});
+      },700);
+    });
+  }
+
+  document.getElementById('toggle').addEventListener('click',function(){
+    var show=senha.type==='password';
+    senha.type=show?'text':'password';
+    this.textContent=show?'Ocultar':'Mostrar';
+    this.setAttribute('aria-pressed',show);
+  });
+
+  function setErr(input,el,msg){el.textContent=msg;input.setAttribute('aria-invalid',msg?'true':'false')}
+
+  form.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    status.textContent='';status.className='status';
+    var ok=true,v=email.value.trim();
+    if(!v){setErr(email,eErr,'Digite seu e-mail.');ok=false}
+    else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){setErr(email,eErr,'Confira o e-mail: falta algo, como @ ou o domínio.');ok=false}
+    else setErr(email,eErr,'');
+    if(!senha.value){setErr(senha,sErr,'Digite sua senha.');ok=false}
+    else if(senha.value.length<6){setErr(senha,sErr,'A senha tem pelo menos 6 caracteres.');ok=false}
+    else setErr(senha,sErr,'');
+    if(!ok){(eErr.textContent?email:senha).focus();return}
+    btn.disabled=true;btn.textContent='Entrando...';
+    autenticar(v,senha.value).then(function(res){
+      btn.disabled=false;btn.textContent='Entrar';
+      if(!res.ok){status.className='status fail';status.textContent=res.mensagem;return}
+      var destino=DESTINOS[res.papel]||DESTINOS.cliente;
+      status.textContent=res.papel==='admin'?'Abrindo o painel do administrador...':'Abrindo sua conta...';
+      // Na versão real, troque pela linha abaixo:
+      // window.location.href=destino;
+      console.log('Redirecionaria para:',destino);
+    });
+  });
+})();
+</script>
+</body>
+</html>
